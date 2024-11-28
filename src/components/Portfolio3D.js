@@ -1,75 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
 import Card from "./Card";
-
-const cards = [
-  {
-    title: "Introduction",
-    content: "I’m a Full Stack Engineer bridging technology and human experiences to build impactful solutions.",
-    color: "#1E3A8A",
-  },
-  {
-    title: "Projects",
-    content: "Explore my innovative projects like the Etherheal Coach Management System and AR/VR prototypes.",
-    color: "#9333EA",
-  },
-  {
-    title: "Skills",
-    content: "JavaScript, Python, React, Flask, AWS, PyTorch, and more.",
-    color: "#059669",
-  },
-  {
-    title: "Experience",
-    content: "Developed scalable systems and innovative solutions for mental health and wellness.",
-    color: "#DC2626",
-  },
-  {
-    title: "Education",
-    content: "Flatiron School Graduate | CompTIA A+ Certified | Ongoing Learning.",
-    color: "#D97706",
-  },
-];
+import ProjectModal from "./ProjectModal";
+import usePortfolio from "../hooks/usePortfolio";
 
 const Portfolio3D = () => {
+  const { projects } = usePortfolio();
+  const [selectedProject, setSelectedProject] = useState(null);
+
+  const handleCardClick = (project) => {
+    setSelectedProject(project);
+  };
+
+  const closeModal = () => {
+    setSelectedProject(null);
+  };
+
   return (
-    <div className="portfolio-3d-container w-full h-screen bg-gray-900">
+    <div className="portfolio-3d-container w-full h-screen bg-gray-900 relative">
+      {/* 3D Canvas */}
       <Canvas shadows camera={{ position: [0, 5, 12], fov: 50 }}>
-        {/* Environment lighting */}
         <Environment preset="city" />
-
-        {/* Lighting */}
         <ambientLight intensity={0.4} />
-        <directionalLight
-          position={[10, 10, 10]}
-          intensity={1.2}
-          castShadow
-          shadow-mapSize-width={1024}
-          shadow-mapSize-height={1024}
-        />
-
-        {/* Cards */}
-        {cards.map((card, index) => {
-          const radius = 6; // Distance from the center
-          const angle = (index / cards.length) * Math.PI * 2; // Angle for each card
+        <directionalLight position={[10, 10, 10]} intensity={1.2} castShadow />
+        {/* 3D Cards */}
+        {projects.map((project, index) => {
+          const radius = 6;
+          const angle = (index / projects.length) * Math.PI * 2;
           const x = Math.sin(angle) * radius;
           const z = Math.cos(angle) * radius;
 
           return (
             <Card
-              key={index}
-              title={card.title}
-              content={card.content}
-              color={card.color}
-              position={[x, 0, z]} // Circular placement
-              rotation={[0, -angle, 0]} // Rotate to face the center
+              key={project.id}
+              color={`hsl(${(index * 360) / projects.length}, 70%, 50%)`}
+              position={[x, 0, z]}
+              frontText={project.name}
+              backText="Click to learn more"
+              onCardClick={() => handleCardClick(project)}
             />
           );
         })}
-
-        {/* Controls */}
         <OrbitControls enableZoom={false} />
       </Canvas>
+
+      {/* Modal */}
+      {selectedProject && (
+        <ProjectModal
+          project={selectedProject}
+          isOpen={!!selectedProject}
+          onClose={closeModal}
+        />
+      )}
     </div>
   );
 };

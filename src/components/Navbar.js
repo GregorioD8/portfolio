@@ -1,4 +1,4 @@
-///src/components/Navbar.js
+// /src/components/Navbar.js
 import React from "react";
 
 const Navbar = () => {
@@ -34,6 +34,7 @@ const Navbar = () => {
               Contact
             </a>
           </li>
+          
         </ul>
       </div>
     </nav>

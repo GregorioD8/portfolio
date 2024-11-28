@@ -1,3 +1,4 @@
+// /src/components/HeroSection.js
 import React from "react";
 import Particles from "react-tsparticles";
 
@@ -52,14 +53,23 @@ const HeroSection = () => {
 
       {/* Hero Content */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
-        <h1 className="text-6xl md:text-7xl font-extrabold text-white mb-6">
-          Creating Stunning Experiences
-        </h1>
-        <p className="text-xl text-gray-300 max-w-2xl">
-          Merging technology and creativity to build impactful solutions that
-          inspire.
-        </p>
-      </div>
+  <h1 className="text-6xl md:text-7xl font-extrabold text-white mb-6">
+    Full-Stack Engineer Driving Empathy in AI
+  </h1>
+  <p className="text-xl text-gray-300 max-w-2xl">
+    I build scalable, user-first applications blending cutting-edge AI and 
+    human-centered design. Inspired by psychology and innovation, my work 
+    bridges technology and humanity.
+  </p>
+  <div className="mt-6 flex space-x-4">
+    <button className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition">
+      <a href="#projects">Explore My Work</a>
+    </button>
+    <button className="px-6 py-3 bg-gray-800 text-white rounded-lg shadow-md hover:bg-gray-700 transition">
+      <a href="/GregDelgadoAI.pdf" download>Download Resume</a>
+    </button>
+  </div>
+</div>
     </section>
   );
 };

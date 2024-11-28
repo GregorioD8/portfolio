@@ -1,11 +1,10 @@
-///src/components/AboutMe.js
 import React, { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { RoundedBox } from "@react-three/drei";
 import { useNavigate } from "react-router-dom";
 import * as THREE from "three";
 
-const Card = ({ color, position, frontText, backText, route, onCardClick }) => {
+const Card = ({ color, position, frontText, backText, route }) => {
   const ref = useRef();
   const [hovered, setHovered] = useState(false);
   const navigate = useNavigate(); // For navigation to project pages
@@ -41,7 +40,7 @@ const Card = ({ color, position, frontText, backText, route, onCardClick }) => {
     return shape;
   };
 
-  // Create text texture with wrapping
+  // Create text texture with wrapping (same as before)
   const createTextTexture = (
     message,
     bgColor = "#333333",
@@ -141,20 +140,13 @@ const Card = ({ color, position, frontText, backText, route, onCardClick }) => {
   geometry.setAttribute("uv", new THREE.BufferAttribute(uvAttribute, 2));
 
   return (
-      <group
-        ref={ref}
-        position={position}
-        onPointerOver={() => setHovered(true)}
-        onPointerOut={() => setHovered(false)}
-        onClick={(e) => {
-          e.stopPropagation(); // Prevent event bubbling
-          if (onCardClick) {
-            onCardClick(); // Trigger modal
-          } else {
-            navigate(route); // Navigate to route if no modal is provided
-          }
-        }}
-      >
+    <group
+      ref={ref}
+      position={position}
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
+      onClick={() => navigate(route)} // Navigate to project page
+    >
       {/* Main rounded box */}
       <RoundedBox
         args={[4, 4, 0.9]}
